@@ -26,10 +26,10 @@ struct SIS{
 };
 
 // part 3
-typedef struct GeneralDataBase{
-    char Name[20];
-    char* Data;
-}GeneralDB;
+//typedef struct GeneralDataBase{
+//    char Name[20];
+//    char* Data;
+//}GeneralDB;
 
 //typedef struct tupleCGS* CGSLIST;
 
