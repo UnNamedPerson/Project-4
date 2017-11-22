@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		146722881FB3FF37008EDFE5 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 146722871FB3FF37008EDFE5 /* main.c */; };
+		146722881FB3FF37008EDFE5 /* sql-run.c in Sources */ = {isa = PBXBuildFile; fileRef = 146722871FB3FF37008EDFE5 /* sql-run.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,9 @@
 
 /* Begin PBXFileReference section */
 		146722841FB3FF37008EDFE5 /* Project 4 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Project 4"; sourceTree = BUILT_PRODUCTS_DIR; };
-		146722871FB3FF37008EDFE5 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		146722871FB3FF37008EDFE5 /* sql-run.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "sql-run.c"; sourceTree = "<group>"; };
+		162BB3251FC5044000CA3D5C /* sql-run.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sql-run.h"; sourceTree = "<group>"; };
+		162BB3261FC5104800CA3D5C /* notes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = notes.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +59,9 @@
 		146722861FB3FF37008EDFE5 /* Project 4 */ = {
 			isa = PBXGroup;
 			children = (
-				146722871FB3FF37008EDFE5 /* main.c */,
+				146722871FB3FF37008EDFE5 /* sql-run.c */,
+				162BB3261FC5104800CA3D5C /* notes.txt */,
+				162BB3251FC5044000CA3D5C /* sql-run.h */,
 			);
 			path = "Project 4";
 			sourceTree = "<group>";
@@ -119,7 +123,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				146722881FB3FF37008EDFE5 /* main.c in Sources */,
+				146722881FB3FF37008EDFE5 /* sql-run.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
