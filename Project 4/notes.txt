@@ -1,0 +1,7 @@
+//for creating and testing the relation
+printf("Grade is %s\n",  *temp->Grade);
+printf("Course is %s\n",  *temp->Course);
+while (temp!=NULL) {
+printf(" NOT NULL ");
+temp=temp->next;
+}
