@@ -5,3 +5,11 @@ while (temp!=NULL) {
 printf(" NOT NULL ");
 temp=temp->next;
 }
+
+//links for some book codes
+
+//insert func
+http://infolab.stanford.edu/~ullman/fcsccode/fig7.14.txt
+
+//delete and lookup funcs
+http://infolab.stanford.edu/~ullman/pub/sols-fcsc-new.ps //here it downloads the file. Open it & go to page 43
