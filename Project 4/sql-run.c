@@ -7,57 +7,87 @@
 //
 #include "sql-run.h"
 
-// Creating new relation (tuple) for the CGS
-CGSLIST* CreateNewRelation(){
-    CGSLIST* CGS_new = (CGSLIST*)malloc(sizeof(CGSLIST));
-    CGS_new->next = NULL;
-    //sets by default to 0;
-    CGS_new->Grade = "0";
-    CGS_new->Course = "0";
-    CGS_new->StudnetID = 0;
-    return CGS_new;
-}
+//// Creating new relation (tuple) for the CGS
+//CGSLIST* CreateNewRelation(){
+//    CGSLIST* CGS_new = (CGSLIST*)malloc(sizeof(CGSLIST));
+//    CGS_new->next = NULL;
+//    //sets by default to 0;
+//    CGS_new->Grade = "0";
+//    CGS_new->Course = "0";
+//    CGS_new->StudnetID = 0;
+//    return CGS_new;
+//}
 
-
-
-// insert method for CGS
-void CGSinsert(char course[5], char grade[2], int studentID,CGSHTable CSG)
+int h(char * x)
 {
-    if(CSG[studentID % 1009] != NULL)
-    {
-        CGSLIST* CGSBucket = CSG[studentID % 1009];
-        while(CGSBucket != NULL)
-        {
-            if(strcmp(CGSBucket->Course, course) && strcmp(CGSBucket->Grade, grade))
-            { // if both of the attributies matches an existing one
-                printf("the tuple already exists");
-            }
-            else
-            {
-                CGSBucket = CGSBucket->next;
-            }
-        }
-        if(CGSBucket == NULL)
-        {
-            CGSBucket = CreateNewRelation();
-            strcpy(course, CSG[studentID % 1009]->Course);
-            strcpy(grade, CSG[studentID % 1009]->Grade);
-            CGSBucket->StudnetID = studentID;
-        }
-    }
-    else
-    { // if the bucket is empty
-        CSG[studentID % 1009] = CreateNewRelation();
-        strcpy(course, CSG[studentID % 1009]->Course);
-        strcpy(grade, CSG[studentID % 1009]->Grade);
-        CSG[studentID % 1009]->StudnetID = studentID;
-    }
+    int i, sum;
+    
+    sum = 0;
+    for (i = 0; x[i] != '\0'; i++)
+        sum += x[i];
+    return sum % B;
 }
+
+void bucketInsert(char *x_course, LIST *pL)
+{
+    if ((*pL) == NULL) {
+        (*pL) = (LIST) malloc(sizeof(struct CGS_CELL));
+        strcpy((*pL)->Course, x_course);
+        (*pL)->next = NULL;
+    }
+    else if (strcmp((*pL)->Course, x_course)) /* x and element
+                                         are different */
+        bucketInsert(x_course, &((*pL)->next));
+}
+
+void insert(char * x, HASHTABLE H)
+{
+    bucketInsert(x, &(H[h(x)]));
+}
+
+
+
+
+
+//
+//// insert method for CGS
+//void CGSinsert(char course[5], char grade[2], int studentID,CGSHTable CSG)
+//{
+//    if(CSG[studentID % 1009] != NULL)
+//    {
+//        CGSLIST* CGSBucket = CSG[studentID % 1009];
+//        while(CGSBucket != NULL)
+//        {
+//            if(strcmp(CGSBucket->Course, course) && strcmp(CGSBucket->Grade, grade))
+//            { // if both of the attributies matches an existing one
+//                printf("the tuple already exists");
+//            }
+//            else
+//            {
+//                CGSBucket = CGSBucket->next;
+//            }
+//        }
+//        if(CGSBucket == NULL)
+//        {
+//            CGSBucket = CreateNewRelation();
+//            strcpy(course, CSG[studentID % 1009]->Course);
+//            strcpy(grade, CSG[studentID % 1009]->Grade);
+//            CGSBucket->StudnetID = studentID;
+//        }
+//    }
+//    else
+//    { // if the bucket is empty
+//        CSG[studentID % 1009] = CreateNewRelation();
+//        strcpy(course, CSG[studentID % 1009]->Course);
+//        strcpy(grade, CSG[studentID % 1009]->Grade);
+//        CSG[studentID % 1009]->StudnetID = studentID;
+//    }
+//}
 
 int main(int argc, const char * argv[]) {
     
-    CGSLIST *temp;
-    temp = CreateNewRelation();
+//    CGSLIST *temp;
+//    temp = CreateNewRelation();
 
     return 0;
 }

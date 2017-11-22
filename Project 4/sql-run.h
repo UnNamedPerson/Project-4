@@ -13,22 +13,35 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct HashPair{
-    char Key;
-    int* Pointer;
-};
+//struct HashPair{
+//    char Key;
+//    int* Pointer;
+//};
+//typedef char Etype[35];
+//char NotFound[30] = "Not Found";
+//char Found[30] = "Found";
+//
+//typedef struct tupleCGS {
+//    char *Course;
+//    char *Grade;
+//    int StudnetID;
+//    struct tupleCGS *next;
+//} CGSLIST;
+//
+//typedef CGSLIST *CGSHTable[1009];
 
-typedef char Etype[35];
-char NotFound[30] = "Not Found";
-char Found[30] = "Found";
+#define B 1009
 
-typedef struct tupleCGS {
+typedef struct CGS_CELL *LIST;
+struct CGS_CELL {
     char *Course;
     char *Grade;
     int StudnetID;
-    struct tupleCGS *next;
-} CGSLIST;
-typedef CGSLIST *CGSHTable[1009];
+    LIST next;
+};
+
+typedef LIST HASHTABLE[B];
+
 
 //typedef struct tupleCP *CPLIST;
 //struct tupleCP{
