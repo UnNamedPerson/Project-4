@@ -32,15 +32,15 @@
 
 #define B 1009
 
-typedef struct CGS_CELL *LIST;
+typedef struct CGS_CELL *CGS_LIST;
 struct CGS_CELL {
     char *Course;
     char *Grade;
     int StudnetID;
-    LIST next;
+    CGS_LIST next;
 };
 
-typedef LIST HASHTABLE[B];
+typedef CGS_LIST HASHTABLE[B];
 
 
 //typedef struct tupleCP *CPLIST;

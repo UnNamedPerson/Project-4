@@ -18,31 +18,34 @@
 //    return CGS_new;
 //}
 
-int h(char * x)
-{
-    int i, sum;
-    
-    sum = 0;
-    for (i = 0; x[i] != '\0'; i++)
-        sum += x[i];
-    return sum % B;
-}
+//needed/wanted if we wanna have a non integer key
+//int h(char * x)
+//{
+//    int i, sum;
+//
+//    sum = 0;
+//    for (i = 0; x[i] != '\0'; i++)
+//        sum += x[i];
+//    return sum % B;
+//}
 
-void bucketInsert(char *x_course, LIST *pL)
+void bucketInsert(int id,char *x_course, char *x_grade, CGS_LIST *pL)
 {
     if ((*pL) == NULL) {
-        (*pL) = (LIST) malloc(sizeof(struct CGS_CELL));
+        (*pL) = (CGS_LIST) malloc(sizeof(struct CGS_CELL));
         strcpy((*pL)->Course, x_course);
+        strcpy((*pL)->Grade, x_grade);
+        //strcpy((*pL)->StudnetID, id);
+        (*pL)->StudnetID=id;
         (*pL)->next = NULL;
-    }
-    else if (strcmp((*pL)->Course, x_course)) /* x and element
-                                         are different */
-        bucketInsert(x_course, &((*pL)->next));
+    } /* x and element are different */
+    else if (strcmp((*pL)->Course, x_course))
+        bucketInsert(id,x_course, x_grade,&((*pL)->next));
 }
 
-void insert(char * x, HASHTABLE H)
+void insert(int id,char *x_course, char *x_grade, HASHTABLE H)
 {
-    bucketInsert(x, &(H[h(x)]));
+    bucketInsert(id,x_course,x_grade, &(H[id%B]));
 }
 
 
