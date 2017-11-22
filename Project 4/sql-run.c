@@ -1,149 +1,108 @@
 //
 //  main.c
-//  Project 4
+//  test proj 4
 //
-//  Created by Abdullah Alsayari on 11/8/17.
-//  Copyright © 2017 Abdullah Alsayari. All rights reserved.
+//  Created by Zhan Dov on 11/22/17.
+//  Copyright © 2017 accolade. All rights reserved.
 //
-#include "sql-run.h"
 
-//// Creating new relation (tuple) for the CGS
-//CGSLIST* CreateNewRelation(){
-//    CGSLIST* CGS_new = (CGSLIST*)malloc(sizeof(CGSLIST));
-//    CGS_new->next = NULL;
-//    //sets by default to 0;
-//    CGS_new->Grade = "0";
-//    CGS_new->Course = "0";
-//    CGS_new->StudnetID = 0;
-//    return CGS_new;
-//}
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define B 5
 
-//needed/wanted if we wanna have a non integer key
-//int h(char * x)
-//{
-//    int i, sum;
-//
-//    sum = 0;
-//    for (i = 0; x[i] != '\0'; i++)
-//        sum += x[i];
-//    return sum % B;
-//}
+typedef char ETYPE[32];
 
-void bucketInsert(int id,char *x_course, char *x_grade, CGS_LIST *pL)
+typedef struct CELL *LIST;
+struct CELL {
+    ETYPE element;
+    ETYPE element1;
+    ETYPE element2;
+    LIST next;
+};
+
+typedef LIST HASHTABLE[B*6];
+
+int h(ETYPE x)
+{
+    int i, sum;
+    
+    sum = 0;
+    for (i = 0; x[i] != '\0'; i++)
+        sum += x[i];
+    return sum % B;
+}
+
+void bucketInsert(ETYPE x, ETYPE y, ETYPE z,LIST *pL)
 {
     if ((*pL) == NULL) {
-        (*pL) = (CGS_LIST) malloc(sizeof(struct CGS_CELL));
-        strcpy((*pL)->Course, x_course);
-        strcpy((*pL)->Grade, x_grade);
-        //strcpy((*pL)->StudnetID, id);
-        (*pL)->StudnetID=id;
+        (*pL) = (LIST) malloc(sizeof(struct CELL));
+        strcpy((*pL)->element, x);
+        strcpy((*pL)->element1, y);
+        strcpy((*pL)->element2, z);
         (*pL)->next = NULL;
-    } /* x and element are different */
-    else if (strcmp((*pL)->Course, x_course))
-        bucketInsert(id,x_course, x_grade,&((*pL)->next));
-}
-
-void insert(int id,char *x_course, char *x_grade, HASHTABLE H)
-{
-    bucketInsert(id,x_course,x_grade, &(H[id%B]));
-}
-
-
-
-
-
-//
-//// insert method for CGS
-//void CGSinsert(char course[5], char grade[2], int studentID,CGSHTable CSG)
-//{
-//    if(CSG[studentID % 1009] != NULL)
-//    {
-//        CGSLIST* CGSBucket = CSG[studentID % 1009];
-//        while(CGSBucket != NULL)
-//        {
-//            if(strcmp(CGSBucket->Course, course) && strcmp(CGSBucket->Grade, grade))
-//            { // if both of the attributies matches an existing one
-//                printf("the tuple already exists");
-//            }
-//            else
-//            {
-//                CGSBucket = CGSBucket->next;
-//            }
-//        }
-//        if(CGSBucket == NULL)
-//        {
-//            CGSBucket = CreateNewRelation();
-//            strcpy(course, CSG[studentID % 1009]->Course);
-//            strcpy(grade, CSG[studentID % 1009]->Grade);
-//            CGSBucket->StudnetID = studentID;
-//        }
-//    }
-//    else
-//    { // if the bucket is empty
-//        CSG[studentID % 1009] = CreateNewRelation();
-//        strcpy(course, CSG[studentID % 1009]->Course);
-//        strcpy(grade, CSG[studentID % 1009]->Grade);
-//        CSG[studentID % 1009]->StudnetID = studentID;
-//    }
-//}
-
-int main(int argc, const char * argv[]) {
-    
-//    CGSLIST *temp;
-//    temp = CreateNewRelation();
-
-    return 0;
-}
-
-/*
-void *CGSLookup(char course[5], char grade[2], int studnetID, CGSHTable CSG){
-    if(CSG == NULL)
-    {
-        printf("%s", NotFound);
-        return NULL;
     }
     else
-    {
-        if(studnetID == CSG[studnetID%1009]->StudnetID)
-        {
-            if(strcmp(course, "*"))
-            {
-                while(CSG[studnetID%1009] != NULL)
-                { // TO DO: check the condition
-                    if(grade == CSG[studnetID%1009]->Grade)
-                    {
-                        printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
-                    }
-                }
-            }
-            else if(strcmp(grade, "*"))
-            {
-                while(CSG[studnetID%1009] != NULL)
-                {
-                    if(course == CSG[studnetID%1009]->Course)
-                    {
-                        printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
-                    }
-                }
-            }
-            else if(strcmp(grade, "*") && strcmp(grade, "*"))
-            {
-                while(CSG != NULL)
-                {
-                    printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
-                }
-            }
-            else
-            {
-                printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
-            }
-            
-        }
+        bucketInsert(x,y,z,&((*pL)->next));
+}
+
+void insert(ETYPE x, ETYPE y, ETYPE z,HASHTABLE H)
+{
+    bucketInsert(x,y,z,&(H[h(x)]));
+}
+int countNodes(LIST start){
+    
+    LIST p;
+    int i = 0;
+    if (start == NULL){
+        //printf("As nodes are 0, the list is empty\n");
+        return 0;
     }
-    // NOT SURE IF WE NEED THIS
-    //    else{
-    //        CGSLookup(course, grade, studnetID, &CSG[studnetID%1009]->next);
-    //    }
+    p=start;
+    while (p!=NULL){ i++; p=p->next;}
+    return i;
+}
+void displayCells(LIST start, int numnodes){
+    
+    LIST p = start;
+    for (int i = 0; i<(numnodes-1); i++) {
+        p=p->next;
+        printf("\t-> {|\"%s\"| |\"%s\"| |\"%s\"|}", p->element,p->element1,p->element2);
+    }
+}
+
+void displayRelations(HASHTABLE temp){
+    int numnodes=0;
+    printf("\n");
+    printf("Hash Table\t\tLists\n");
+    LIST p;
+    for (int i = 0; i<5; i++) {
+        p=temp[i];
+        if (p==NULL) {
+            printf("HASH[%d]\t\t-> |\"%s\"|", i,temp[i]->element);
+        } else {
+            printf("HASH[%d]\t\t-> {|\"%s\"| |\"%s\"| |\"%s\"|}", i,p->element,p->element1,p->element2);
+        }
+        numnodes=countNodes(p);
+        displayCells(p, numnodes);
+        printf("\n");
+    }
+    printf("\n");
+}
+
+int main(int argc, const char * argv[]) {
+    HASHTABLE temp;
+    
+    insert("anyone",    "any",   "one",  temp);
+    insert("lived",     "live",  "ed",   temp);
+    insert("in",        "icida", "dar",  temp);
+    insert("a",         "sal",   "om",   temp);
+    insert("pretty",    "ch",    "royli",temp);
+    insert("how",       "ins",   "of",   temp);
+    insert("town",      "iy",    "mon",  temp);
+    
+    displayRelations(temp);
+    
     return 0;
 }
-*/
+

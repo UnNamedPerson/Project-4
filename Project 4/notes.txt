@@ -13,3 +13,104 @@ http://infolab.stanford.edu/~ullman/fcsccode/fig7.14.txt
 
 //delete and lookup funcs
 http://infolab.stanford.edu/~ullman/pub/sols-fcsc-new.ps //here it downloads the file. Open it & go to page 43
+
+
+//
+//  sql-run.h
+//  Project 4
+//
+//  Created by Zhan Dov on 11/21/17.
+//  Copyright © 2017 Abdullah Alsayari. All rights reserved.
+//
+
+#ifndef sql_run_h
+#define sql_run_h
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+typedef char ETYPE[32];
+#define B 1009
+
+typedef struct CGS_CELL *CGS_LIST;
+struct CGS_CELL {
+ETYPE Course;
+ETYPE Grade;
+ETYPE StudnetID;
+CGS_LIST next;
+};
+
+typedef CGS_LIST CGS_HASHTABLE[B];
+//// insert funcs
+//void bucketInsert(char *id,char *x_course, char *x_grade, CGS_LIST *pL);
+//void insert(char *id,char *x_course, char *x_grade, CGS_HASHTABLE H);
+//// lookup funcs
+//bool bucketLookup(char *id,CGS_LIST L);
+//bool lookup(char *id,CGS_HASHTABLE S);
+
+#endif /* sql_run_h */
+
+
+
+
+
+#include "sql-run.h"
+
+int h(ETYPE x)
+{
+int i, sum;
+
+sum = 0;
+for (i = 0; x[i] != '\0'; i++)
+sum += x[i];
+return sum % B;
+}
+
+// insert function
+void bucketInsert(ETYPE id,ETYPE x_course, ETYPE x_grade, CGS_LIST *pL)
+{
+if ((*pL) == NULL) {
+(*pL) = (CGS_LIST) malloc(sizeof(struct CGS_CELL));
+//        strcpy((*pL)->Course, x_course);
+//        strcpy((*pL)->Grade, x_grade);
+strcpy((*pL)->StudnetID, id);
+(*pL)->next = NULL;
+} /* x and element are different */
+else if ((*pL)->StudnetID==id){
+puts("they are the same\n");
+} else {
+bucketInsert(id,x_course, x_grade,&((*pL)->next));
+}
+}
+void insert(ETYPE id,ETYPE x_course, ETYPE x_grade, CGS_HASHTABLE H)
+{
+bucketInsert(id,x_course,x_grade, &(H[h(id)]));
+}
+
+//// lookup function
+//bool bucketLookup(char *id,CGS_LIST L) {
+//    if(L==NULL)
+//        return false;
+//    else if(L->StudnetID==id){
+//        printf("id is %s\n", L->StudnetID);
+//        printf("grade is %s\n", L->Grade);
+//        printf("course is %s", L->Course);
+//        return true;
+//    }
+//    else
+//        return lookup(id, &L->next);
+//}
+//bool lookup(char *id,CGS_HASHTABLE S){
+//    return bucketLookup(id, S[h(id)]);
+//}
+
+int main(int argc, const char * argv[]) {
+
+CGS_HASHTABLE temp;
+insert("7", "c", "g", temp);
+//lookup("127",temp);
+return 0;
+}
+
