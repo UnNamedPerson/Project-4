@@ -114,3 +114,4 @@ insert("7", "c", "g", temp);
 return 0;
 }
 
+http://www.sanfoundry.com/c-program-implement-hash-tables-chaining-with-singly-linked-lists/
