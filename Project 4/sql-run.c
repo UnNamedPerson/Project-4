@@ -88,9 +88,6 @@ void bucketInsert(ETYPE x, ETYPE y, ETYPE z,LIST *pL)
         (*pL)->next = NULL;
     } else if (strcmp((*pL)->element, x))
         bucketInsert(x,y,z,&((*pL)->next));
-    //it works also without else if statement -> in this way:
-    // else {bucketInsert(x,y,z,&((*pL)->next));}
-    //but book chose the first way
     
 }
 void insert(ETYPE x, ETYPE y, ETYPE z,HASHTABLE H)
@@ -99,11 +96,6 @@ void insert(ETYPE x, ETYPE y, ETYPE z,HASHTABLE H)
 }
 
 // Delete Functions
-
-//if((*pL)->element!=x || (*pL)->element1!=y ||(*pL)->element2!=z){
-//still didn't get it that why  above code works it should be '==' and not '!='
-//as if it's '!=' doesn't make sense as if it's equal to x,y,or z then we should perform that remove operation
-//but if we put '==' it doesn't work, why???
 
 void bucketDelete(ETYPE x, ETYPE y, ETYPE z,LIST *pL)
 {
@@ -120,6 +112,44 @@ void delete(ETYPE x, ETYPE y, ETYPE z,HASHTABLE S)
     bucketDelete(x,y,z,&(S[h(x)]));
 }
 
+//Lookup functions
+void bucketLookup(ETYPE x, ETYPE y, ETYPE z, LIST *pL){
+    if(strcmp((*pL)->element, x)==0)// if the Studnetid is found
+    {
+        if(strcmp(y, "*")==0 && strcmp(z, "*")==0){
+            while((*pL) != NULL){
+                printf("StudentID: %s |Course :%s| Grade: %s\n", (*pL)->element, (*pL)->element1, (*pL)->element2);
+                (*pL)=(*pL)->next;
+            }
+        } else if(strcmp(y, "*")==0){
+            while( (*pL) != NULL){ // TO DO: check the condition
+                if(strcmp((*pL)->element2, z)==0){
+                    printf("StudentID: %s |Course :%s| Grade: %s\n",  (*pL)->element,  (*pL)->element1, (*pL)->element2);
+                }
+                (*pL)=(*pL)->next;
+            }
+        } else if(strcmp(z, "*")==0){
+            while((*pL) != NULL){
+                if(strcmp((*pL)->element1, y)==0){
+                    printf("StudentID: %s |Course :%s| Grade: %s\n", (*pL)->element, (*pL)->element1, (*pL)->element2);
+                }
+                (*pL)=(*pL)->next;
+            }
+        } else {
+            printf("StudentID: %s |Course :%s| Grade: %s\n", (*pL)->element, (*pL)->element1, (*pL)->element2);
+        }
+        
+    } else {
+        bucketLookup(x, y, z, &((*pL)->next));
+    }
+}
+
+void lookup(ETYPE x, ETYPE y, ETYPE z,HASHTABLE L){
+    bucketLookup(x,y,z,&(L[h(x)]));
+
+}
+
+    
 int main(int argc, const char * argv[]) {
     HASHTABLE temp;
     
@@ -136,12 +166,15 @@ int main(int argc, const char * argv[]) {
     displayRelations(temp);
     
     printf("\n\tDeleting Some Tuples\n");
-    
-    delete("1232",  "sala", "omq",  temp);
+
     delete("3421",  "insa", "ofa",  temp);
-    delete("2135",  "icid", "dar",  temp);
+    delete("4322",  "iyer", "mon",  temp);
 
     displayRelations(temp);
+    
+    lookup("8784",  "*", "*",  temp);
+    lookup("2135",  "icid", "*",  temp);
+    lookup("1232",  "*", "omq",  temp);
     
     return 0;
 }
