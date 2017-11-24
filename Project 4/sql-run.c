@@ -34,45 +34,24 @@ int h(ETYPE x)
     return sum % B;
 }
 
-// Display Functions and other methods that're needed for display functions
-int countNodes(LIST start){
-    int i = 0;
-    if (start == NULL){
-        return i; //As nodes are 0, the list is empty
-    } else {
-        LIST p; p=start;
-        while (p!=NULL){
-            i++;
-            p=p->next;
-        }
-        return i;
-    }
-}
-
-void displayCells(LIST start, int numnodes){
-   
-    LIST p; p=start;
-    for (int i = 0; i<(numnodes-1); i++){
-        p=p->next;
-        printf("\t-> {|\"%s\"| |\"%s\"| |\"%s\"|}", p->element,p->element1,p->element2);
-    }
-}
+// Display Function
 
 void displayRelations(HASHTABLE temp){
-    int numnodes=0;
     printf("\n");
     printf("Hash Table\t\tLists\n");
     LIST p;
     for (int i = 0; i<5; i++) {
         p=temp[i];
         if (p==NULL) {
-            printf("HASH[%d]\t\t-> |\"%s\"|", i,temp[i]->element);
+            printf("HASH[%d]\t\t-> {|\"%s\"|}\n", i,temp[i]->element);
         } else {
-            printf("HASH[%d]\t\t-> {|\"%s\"| |\"%s\"| |\"%s\"|}", i,p->element,p->element1,p->element2);
+            printf("HASH[%d]\t", i);
+            while (p!=NULL) {
+                printf("\t-> {|\"%s\"| |\"%s\"| |\"%s\"|}", p->element,p->element1,p->element2);
+                p=p->next;
+            }
+            printf("\n");
         }
-        numnodes=countNodes(p);
-        displayCells(p, numnodes);
-        printf("\n");
     }
     printf("\n");
 }
@@ -149,7 +128,26 @@ void lookup(ETYPE x, ETYPE y, ETYPE z,HASHTABLE L){
 
 }
 
-    
+void saveDatabase(HASHTABLE temp){
+// create a FILE typed pointer
+    FILE *file_pointer;
+
+// open/create the file "test.sql" for writing
+    file_pointer = fopen("check_data.txt","a+");
+
+// write to the file
+    LIST p;
+    for (int i = 0; i<5; i++) {
+        p=temp[i];
+        while (p!=NULL) {
+            fprintf(file_pointer,"%s\t%s\t%s\n",p->element,p->element1,p->element2);
+            p=p->next;
+        }
+    }
+// Close the file
+    fclose(file_pointer);
+}
+
 int main(int argc, const char * argv[]) {
     HASHTABLE temp;
     
@@ -164,6 +162,8 @@ int main(int argc, const char * argv[]) {
     insert("4322",  "iyer", "mon",  temp);
     
     displayRelations(temp);
+    
+    saveDatabase(temp);
     
     printf("\n\tDeleting Some Tuples\n");
 
