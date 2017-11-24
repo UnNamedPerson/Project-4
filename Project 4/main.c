@@ -26,10 +26,10 @@ struct SIS{
 };
 
 // part 3
-//typedef struct GeneralDataBase{
-//    char Name[20];
-//    char* Data;
-//}GeneralDB;
+typedef struct GeneralDataBase{
+    char Name[20];
+    char* Data;
+}GeneralDB;
 
 //typedef struct tupleCGS* CGSLIST;
 
@@ -115,21 +115,22 @@ void *CGSLookup(char course[5], char grade[2], int studnetID, CGSHTable CSG){ //
     if(studnetID == CSG[studnetID%1009]->StudnetID){ // if the Studnetid is found
 
         if(strcmp(course, "*")){
-            while(CSG[studnetID%1009] != NULL){ // TO DO: check the condition
+            if(CSG[studnetID%1009] != NULL){ // TO DO: check the condition
                 if(grade == CSG[studnetID%1009]->Grade){
                     printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
                 }
+                
             }
         }
         else if(strcmp(grade, "*")){
-            while(CSG[studnetID%1009] != NULL){
+            if(CSG[studnetID%1009] != NULL){
                 if(course == CSG[studnetID%1009]->Course){
                     printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
                 }
             }
         }
         else if(strcmp(grade, "*") && strcmp(grade, "*")){
-            while(CSG != NULL){
+            if(CSG != NULL){
                 printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
                 
             }
@@ -138,7 +139,9 @@ void *CGSLookup(char course[5], char grade[2], int studnetID, CGSHTable CSG){ //
             printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
         }
         
+        CGSLookup
     }
+    
 
     // NOT SURE IF WE NEED THIS
 //    else{
@@ -150,7 +153,8 @@ void *CGSLookup(char course[5], char grade[2], int studnetID, CGSHTable CSG){ //
 
 
 // delete methode for CGS
-void CGSdelete(){
+void CGSdelete(char course[5], char grade[2], int studnetID, CGSHTable CSG){
+    CGSLookup(course, grade, studnetID, CSG);
     
 }
 
@@ -219,6 +223,11 @@ struct Node {
     SITree Rc;
 };
 
+// updating the secondary index
+void update(){
+    
+}
+
 
 // part 3
 
@@ -235,7 +244,7 @@ void *CGS_SelectLookup(char course[5], char grade[2], int studnetID, CGSHTable C
     if(studnetID == CSG[studnetID%1009]->StudnetID){ // if the Studnetid is found
         
         
-        else{
+        if(){
             printf("StudentID: %d |Course :%s| Grade: %s", CSG[studnetID%1009]->StudnetID, CSG[studnetID%1009]->Course, CSG[studnetID%1009]->Grade);
         }
         
